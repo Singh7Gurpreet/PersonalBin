@@ -3,6 +3,8 @@ import session from "express-session";
 import passport from "passport";
 import "./controllers/auth/googleAuthentication.js";
 import authRoutes from "./routes/auth.js";
+import apiRoutes from "./routes/api.js"
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -17,7 +19,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(cookieParser());
 app.use(authRoutes);
+app.use(apiRoutes);
 
 app.get("/", (req, res) => {
   res.send(req.user ? `Hello ${req.user}` : "Not logged in");
