@@ -5,8 +5,14 @@ import "./controllers/auth/googleAuthentication.js";
 import authRoutes from "./routes/auth.js";
 import apiRoutes from "./routes/api.js"
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:3001', // your frontend URL
+  credentials: true,               // allow cookies to be sent
+}));
 
 app.use(
   session({

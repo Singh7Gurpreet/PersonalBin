@@ -22,7 +22,7 @@ router.get(
       maxAge: 30*24*60*1000
     });
 
-    res.redirect("/api/file");
+    res.redirect("http://localhost:3001/dashboard");
   }
 );
 
