@@ -2,6 +2,9 @@ import { Router,Request,Response} from "express";
 import jwtVerifyMiddleWare from "../middlewares/verifyToken.js";
 const router = Router();
 
+// Just for testing purpose I am removing this
+// becuase I dont want this login condition again and
+// again
 router.use(jwtVerifyMiddleWare);
 
 router.get("/api/file", (req:Request,res:Response) => {
@@ -11,19 +14,22 @@ router.get("/api/file", (req:Request,res:Response) => {
   // it simply sends request to DELETE /api/file
 
   // if not available it simple sends 404 not found 
-  res.send("In GET /api/file");
+  res.sendStatus(404);
 })
 
-router.post("/api/file", (req:Request,res:Response) => {
+router.post("/api/fileHash", (req:Request,res:Response) => {
   // it will recieve 
   // email can be fetched from jwt token itself
   // {md5ofFile}
-  // it will recive md5 of the file that user calculated
+  // it will recive sha256 of the file that user calculated
   // which will be linked to make new key as 
-  // sha-256(email+"random keys upto lenght 10" + md5(file))
+  // sha-256(email+"random keys of lenght 10" + sha256(file))
   // so it will generate link for amazon s3 bucket upload 
   // and it will also push job such that api delete file will be called
   // after 30 minutes(default) (or as required by user) if not downloaded.
+  const sha256hash = req.body.hash;
+  const { email } = req.user as {email:string};
+  
   res.send("In POST /api/file");
 })
 

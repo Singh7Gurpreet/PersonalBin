@@ -12,7 +12,6 @@ export default function Dashboard() {
         const data = await axios.get("http://localhost:3000/api/file", {
           withCredentials: true,
         });
-        console.log(data);
         setStatus("found");
       } catch (error) {
         if (error.response?.status === 404) {
