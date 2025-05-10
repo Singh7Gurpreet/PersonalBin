@@ -1,35 +1,45 @@
-import React from "react";
 import axios from "axios";
 
 export default function FileUpload() {
+  let file = null;
+  let uploadUrl = null;
 
-  const handleFileChange = async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
+  const handleFileChange = async (e) => {
+    file = e.target.files[0];
+    if (!file) return;
 
-  const arrayBuffer = await file.arrayBuffer();
-  const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+    try {
+      const res = await axios.post("http://localhost:3000/api/fileHash", {
+        fileName: file.name,
+        fileType: file.type
+      },{withCredentials:true});
+      uploadUrl = res.data.link;
+    } catch (err) {
+      console.error("Error getting upload URL:", err);
+    }
+  };
 
-  // Convert buffer to hex string
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  
-  const res = await axios.post(
-  "http://localhost:3000/api/fileHash",
-  { hash: hashHex },
-  { withCredentials: true }
-);
-  console.log(res);
-};
+  const handleUploadClick = async () => {
+    if (!file || !uploadUrl) {
+      alert("Select a file first");
+      return;
+    }
 
+    try {
+      await axios.put(uploadUrl, file, {
+        headers: { "Content-Type": file.type },
+      });
+      alert("File uploaded");
+    } catch (err) {
+      console.error("Upload error:", err);
+    }
+  };
 
   return (
-    <>
     <div>
-      <input type="file" onChange={handleFileChange}/>
+      <h2>Simple Upload to S3</h2>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUploadClick}>Upload</button>
     </div>
-    </>
-  )
+  );
 }

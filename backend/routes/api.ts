@@ -1,5 +1,8 @@
 import { Router,Request,Response} from "express";
 import jwtVerifyMiddleWare from "../middlewares/verifyToken.js";
+import linkGenerator from "../utils/awsUploadLinkGenerator.js";
+import getHash from "../utils/hashFunction.js"
+
 const router = Router();
 
 // Just for testing purpose I am removing this
@@ -17,7 +20,7 @@ router.get("/api/file", (req:Request,res:Response) => {
   res.sendStatus(404);
 })
 
-router.post("/api/fileHash", (req:Request,res:Response) => {
+router.post("/api/fileHash",async (req:Request,res:Response) => {
   // it will recieve 
   // email can be fetched from jwt token itself
   // {md5ofFile}
@@ -27,10 +30,12 @@ router.post("/api/fileHash", (req:Request,res:Response) => {
   // so it will generate link for amazon s3 bucket upload 
   // and it will also push job such that api delete file will be called
   // after 30 minutes(default) (or as required by user) if not downloaded.
-  const sha256hash = req.body.hash;
   const { email } = req.user as {email:string};
+  const {fileType} = req.body;
   
-  res.send("In POST /api/file");
+  res.json({
+    link: await linkGenerator(getHash(email),fileType)
+  }).send();
 })
 
 router.delete("/api/file", (req:Request,res:Response) => {

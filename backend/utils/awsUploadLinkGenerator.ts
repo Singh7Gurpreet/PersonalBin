@@ -1,0 +1,16 @@
+import s3Client from "../lib/singletonS3Client.js";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import config from "../configs/default.js"
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
+async function linkGenerator(email:string, type: string) : Promise<string> {
+  const command = new PutObjectCommand({
+    Bucket: config.BUCKET_NAME!,
+    Key: email,
+    ContentType: type
+  });
+  
+  return await getSignedUrl(s3Client, command, { expiresIn: 900 });
+}
+
+export default linkGenerator;

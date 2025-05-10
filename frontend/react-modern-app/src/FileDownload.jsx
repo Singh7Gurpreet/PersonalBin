@@ -5,5 +5,5 @@ export default function FileDownload({link}) {
     <>
     <h1>File to download from {link}</h1>
     </>
-  )
+  );
 }
