@@ -5,6 +5,7 @@ import FileUpload from "./FileUpload";
 
 export default function Dashboard() {
   const [status, setStatus] = useState("loading");
+  const [data,setData] = useState(null);
 
   useEffect(() => {
     const fetchFile = async () => {
@@ -12,6 +13,7 @@ export default function Dashboard() {
         const data = await axios.get("http://localhost:3000/api/file", {
           withCredentials: true,
         });
+        setData(data.data);
         setStatus("found");
       } catch (error) {
         if (error.response?.status === 404) {
@@ -26,6 +28,6 @@ export default function Dashboard() {
   }, []);
 
   if (status === "loading") return <p>Loading...</p>;
-  if (status === "found") return <FileDownload link="http://localhost:3000/api/file" />;
+  if (status === "found") return <FileDownload link={data.link} />;
   if (status === "not_found") return <FileUpload />;
 }
