@@ -1,7 +1,4 @@
 import { Request, Response } from "express";
-import { ListObjectsV2Command } from "@aws-sdk/client-s3";
-import linkGenerator from "../../utils/awsUploadLinkGenerator.js";
-import getHash from "../../utils/hashFunction.js";
 import awsGetFile from "../../utils/awsGetFiles.js";
 
 const getFile = async (req: Request, res: Response) => {

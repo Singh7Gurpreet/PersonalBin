@@ -18,8 +18,6 @@ export default function Dashboard() {
       } catch (error) {
         if (error.response?.status === 404) {
           setStatus("not_found");
-        } else {
-          console.error("Unhandled error:", error);
         }
       }
     };

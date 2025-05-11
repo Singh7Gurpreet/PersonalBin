@@ -5,9 +5,10 @@ import getHash from "../../utils/hashFunction.js";
 const postFile = async (req: Request, res: Response) => {
   try {
     const { email } = req.user as { email: string };
-    const { fileType } = req.body;
+    const { fileName } = req.body as {fileName:string};
+    console.log(req.body);
 
-    const link = await linkGenerator(getHash(email), fileType);
+    const link = await linkGenerator(getHash(email), fileName);
 
     return res.json({ link });
   } catch (error) {
