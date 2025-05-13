@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import linkGenerator from "../../utils/awsUploadLinkGenerator.js";
-import getHash from "../../utils/hashFunction.js";
 
 const postFile = async (req: Request, res: Response) => {
   try {
@@ -8,7 +7,7 @@ const postFile = async (req: Request, res: Response) => {
     const { fileName } = req.body as {fileName:string};
     console.log(req.body);
 
-    const link = await linkGenerator(getHash(email), fileName);
+    const link = await linkGenerator(email, fileName);
 
     return res.json({ link });
   } catch (error) {
