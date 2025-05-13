@@ -10,10 +10,9 @@ import readyKey from "./hashFunctions.js";
 const generateDownloadLink = async (email: string) => {
   const key = readyKey(email);
   try {
-    // Step 1: List all objects with the given prefix
     const listCommand = new ListObjectsV2Command({
       Bucket: config.BUCKET_NAME,
-      Prefix: key, // e.g., "key-"
+      Prefix: key,
     });
 
     const listResponse = await s3Client.send(listCommand);
@@ -26,8 +25,6 @@ const generateDownloadLink = async (email: string) => {
 
     // Step 3: Use the first matched key
     const objectKey = objects[0].Key!;
-
-    // Extract filename from the key (everything after "key-")
     const filename = objectKey.split("$$")[1];
 
     // Step 4: Generate signed URL
