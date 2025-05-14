@@ -9,7 +9,7 @@ export default function FileUpload() {
     if (!file) return;
 
     try {
-      const res = await axios.post("http://localhost:3000/api/file", {
+      const res = await axios.post("https://personalbin.onrender.com/api/file", {
         fileName: file.name,
         fileType: file.type
       },{withCredentials:true});

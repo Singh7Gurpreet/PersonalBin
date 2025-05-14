@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import express from "express";
 import session from "express-session";
 import passport from "passport";
@@ -12,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3001', // your frontend URL
+  origin: 'https://personalbinfrontend.onrender.com', // your frontend URL
   credentials: true,               // allow cookies to be sent
 }));
 

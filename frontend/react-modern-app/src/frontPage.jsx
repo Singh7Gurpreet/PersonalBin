@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function SimpleButton() {
   const handleClick = () => {
-    window.location.href = "http://localhost:3000/auth/google"
+    window.location.href = "https://personalbin.onrender.com/auth/google"
   };
 
   return (

@@ -10,7 +10,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const data = await axios.get("http://localhost:3000/api/file", {
+        const data = await axios.get("https://personalbin.onrender.com/api/file", {
           withCredentials: true,
         });
         setData(data.data);

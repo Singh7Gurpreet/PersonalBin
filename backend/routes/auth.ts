@@ -1,5 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = Router();
 
@@ -22,7 +24,7 @@ router.get(
       maxAge: 30*24*60*1000
     });
 
-    res.redirect("http://localhost:3001/dashboard");
+    res.redirect("https://personalbinfrontend.onrender.com/dashboard");
   }
 );
 

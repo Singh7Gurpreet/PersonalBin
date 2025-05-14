@@ -10,13 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { ListObjectsV2Command, GetObjectCommand, } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3Client from "../lib/singletonS3Client.js";
-import config from "../configs/default.js";
 import readyKey from "./hashFunctions.js";
 const generateDownloadLink = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const key = readyKey(email);
     try {
         const listCommand = new ListObjectsV2Command({
-            Bucket: config.BUCKET_NAME,
+            Bucket: process.env.BUCKET_NAME,
             Prefix: key,
         });
         const listResponse = yield s3Client.send(listCommand);
@@ -30,7 +29,7 @@ const generateDownloadLink = (email) => __awaiter(void 0, void 0, void 0, functi
         const filename = objectKey.split("$$")[1];
         // Step 4: Generate signed URL
         const command = new GetObjectCommand({
-            Bucket: config.BUCKET_NAME,
+            Bucket: process.env.BUCKET_NAME,
             Key: objectKey,
             ResponseContentDisposition: `attachment; filename="${filename}"`,
         });
