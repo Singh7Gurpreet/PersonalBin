@@ -5,11 +5,12 @@ export default function FileUpload() {
   let uploadUrl = null;
 
   const handleFileChange = async (e) => {
+    const apiUrl = import.meta.env;
     file = e.target.files[0];
     if (!file) return;
 
     try {
-      const res = await axios.post("http://localhost:3000/api/file", {
+      const res = await axios.post(`${apiUrl.VITE_BACKEND_URL}/api/file`, {
         fileName: file.name,
         fileType: file.type
       },{withCredentials:true});

@@ -1,8 +1,11 @@
-import React from 'react';
+const apiUrl = import.meta.env;
+
+console.log(apiUrl.VITE_BACKEND_URL);
 
 export default function SimpleButton() {
   const handleClick = () => {
-    window.location.href = "http://localhost:3000/auth/google"
+    console.log(apiUrl);
+    window.location.href = `${apiUrl.VITE_BACKEND_URL}/auth/google`
   };
 
   return (

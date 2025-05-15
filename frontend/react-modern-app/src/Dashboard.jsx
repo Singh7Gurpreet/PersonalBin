@@ -10,7 +10,8 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchFile = async () => {
       try {
-        const data = await axios.get("http://localhost:3000/api/file", {
+        const apiUrl = import.meta.env.VITE_BACKEND_URL;
+        const data = await axios.get(`${apiUrl}/api/file`, {
           withCredentials: true,
         });
         setData(data.data);

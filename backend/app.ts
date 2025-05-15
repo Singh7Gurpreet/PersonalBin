@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3001', // your frontend URL
+  origin: process.env.FRONTEND_URL, // your frontend URL
   credentials: true,               // allow cookies to be sent
 }));
 
@@ -39,5 +39,5 @@ app.get("/", (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://${process.env.BACKEND_URL}:${PORT}`);
 });
