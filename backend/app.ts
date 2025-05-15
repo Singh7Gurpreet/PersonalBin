@@ -18,13 +18,16 @@ app.use(cors({
   credentials: true,               // allow cookies to be sent
 }));
 
-app.use(
-  session({
-    secret: "some-secret",
-    resave: false,
-    saveUninitialized: false
-  })
-);
+app.use(session({
+  secret: "some-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false, // ❗ Must be false if frontend is on localhost (HTTP)
+    sameSite: 'lax'
+  }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
