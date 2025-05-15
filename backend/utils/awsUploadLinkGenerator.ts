@@ -1,12 +1,11 @@
 import s3Client from "../lib/singletonS3Client.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import config from "../configs/default.js"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import readyKey from "./hashFunctions.js";
 
 async function linkGenerator(email:string, name: string) : Promise<string> {
   const command = new PutObjectCommand({
-    Bucket: config.BUCKET_NAME!,
+    Bucket: process.env.BUCKET_NAME!,
     Key: `${readyKey(email)}$$${name}`,
   });
   

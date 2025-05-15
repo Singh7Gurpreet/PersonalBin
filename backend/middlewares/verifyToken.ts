@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import config from "../configs/default.js";
 
-const JWT_SECRET = config.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   // Get token from headers
@@ -14,7 +13,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     // Verify the token
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     
     // Attach user data to the request object
     req.user = decoded;

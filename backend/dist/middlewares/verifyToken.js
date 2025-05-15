@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import config from "../configs/default.js";
-const JWT_SECRET = config.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 const verifyToken = (req, res, next) => {
     // Get token from headers
     const token = req.cookies.token;
@@ -10,7 +9,7 @@ const verifyToken = (req, res, next) => {
     }
     try {
         // Verify the token
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // Attach user data to the request object
         req.user = decoded;
         next(); // pass control to the next middleware

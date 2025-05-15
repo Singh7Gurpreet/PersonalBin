@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import s3Client from "../lib/singletonS3Client.js";
-import config from "../configs/default.js";
 import readyKey from "./hashFunctions.js";
 const deleteItemFromS3 = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const key = readyKey(email);
     try {
         const listCommand = new ListObjectsV2Command({
-            Bucket: config.BUCKET_NAME,
+            Bucket: process.env.BUCKET_NAME,
             Prefix: key,
         });
         const listResponse = yield s3Client.send(listCommand);
@@ -25,7 +24,7 @@ const deleteItemFromS3 = (email) => __awaiter(void 0, void 0, void 0, function* 
         }
         const objectKey = objects[0].Key;
         const command = new DeleteObjectCommand({
-            Bucket: config.BUCKET_NAME,
+            Bucket: process.env.BUCKET_NAME,
             Key: objectKey
         });
         const response = yield s3Client.send(command);
