@@ -3,6 +3,7 @@ import jwtVerifyMiddleWare from "../middlewares/verifyToken.js";
 import postFile from "../controllers/api/postFile.js";
 import getFile from "../controllers/api/getFile.js";
 import deletefile from "../controllers/api/deleteFile.js";
+import  getKey from "../controllers/api/getKey.js";
 
 const router = Router();
 
@@ -16,5 +17,7 @@ router.get("/api/file", getFile);
 router.post("/api/file",postFile);
 
 router.delete("/api/file", deletefile);
+
+router.get("/session/key",getKey);
 
 export default router;
