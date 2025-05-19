@@ -5,7 +5,6 @@ const postFile = async (req: Request, res: Response) => {
   try {
     const { email } = req.user as { email: string };
     const { fileName } = req.body as {fileName:string};
-    console.log(req.body);
 
     const link = await linkGenerator(email, fileName);
 

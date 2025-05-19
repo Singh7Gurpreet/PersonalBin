@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import insertKey from "../../utils/putKeyRedis.js";
 import dotenv from 'dotenv';
 import { RedisArgument } from "redis";
+import { connect } from "http2";
 dotenv.config();
 passport.use(
 
@@ -21,7 +22,7 @@ passport.use(
       });
       const session = req.query.state as RedisArgument;
       if(session !== undefined) {
-        insertKey(session,token);
+        await insertKey(session,token);
       }
       return done(null,{token});
     }

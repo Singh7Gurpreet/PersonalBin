@@ -6,6 +6,7 @@ import passport from "passport";
 import "./controllers/auth/googleAuthentication.js";
 import authRoutes from "./routes/auth.js";
 import apiRoutes from "./routes/api.js"
+import sessionRoutes from "./routes/session.js";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -33,6 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cookieParser());
+app.use(sessionRoutes);
 app.use(authRoutes);
 app.use(apiRoutes);
 
@@ -42,5 +44,5 @@ app.get("/", (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://${process.env.BACKEND_URL}:${PORT}`);
+  console.log(`Server running on ${process.env.BACKEND_URL}`);
 });

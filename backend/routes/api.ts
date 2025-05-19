@@ -18,6 +18,4 @@ router.post("/api/file",postFile);
 
 router.delete("/api/file", deletefile);
 
-router.get("/session/key",getKey);
-
 export default router;
