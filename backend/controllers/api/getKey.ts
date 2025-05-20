@@ -13,10 +13,11 @@ export default async function getJwtKey(req: Request, res: Response) {
     const value = await connection.get(session);
     if (value !== null) {
       await connection.del(session);
+    } else {
+      throw new Error("Value not found");
     }
     return res.status(200).json({ token: value }); // ✅ send back the token
   } catch (err) {
-    console.error("Redis error:", err);
-    return res.status(500).json({ error: "Server error" });
+    return res.status(404).json({ error: err });
   }
 }
