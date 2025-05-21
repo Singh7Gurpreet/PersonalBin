@@ -21,13 +21,10 @@ passport.use(
       const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
         expiresIn: "30d",
       });
-      console.log("24")
       const session = req.query.state as RedisArgument;
-      console.log("26")
       if(session !== undefined) {
         await insertKey(session,token);
       }
-      console.log(30);
       return done(null,{token});
     } catch(error) {
       console.log(error);
