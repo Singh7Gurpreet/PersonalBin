@@ -16,7 +16,8 @@ passport.use(
       passReqToCallback: true
     },
     async function(req,accessToken, refreshToken, profile,done) {
-      const email = profile.emails?.[0].value;
+      try{
+        const email = profile.emails?.[0].value;
       const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
         expiresIn: "30d",
       });
@@ -25,6 +26,8 @@ passport.use(
         await insertKey(session,token);
       }
       return done(null,{token});
+    } catch(error) {
+      console.log(error);
     }
-  )
-);
+  }
+));
