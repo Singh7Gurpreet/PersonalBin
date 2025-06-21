@@ -7,6 +7,7 @@ import "./controllers/auth/googleAuthentication.js";
 import authRoutes from "./routes/auth.js";
 import apiRoutes from "./routes/api.js"
 import sessionRoutes from "./routes/session.js";
+import helperRoutes from "./routes/helper.js"
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -36,6 +37,7 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(sessionRoutes);
 app.use(authRoutes);
+app.use(helperRoutes);
 app.use(apiRoutes);
 
 app.get("/", (req, res) => {
