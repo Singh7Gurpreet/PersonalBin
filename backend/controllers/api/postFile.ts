@@ -6,8 +6,8 @@ const postFile = async (req: Request, res: Response) => {
     const { email } = req.user as { email: string };
     const { fileName } = req.body as {fileName:string};
 
-    const link = await linkGenerator(email, fileName);
-    return res.json({ link });
+    const fileLink = await linkGenerator(email, fileName);
+    return res.json({ link:fileLink });
   } catch (error) {
     console.error("Error generating file upload link:", error);
     return res.status(500).json({ error: "Failed to generate link" });
