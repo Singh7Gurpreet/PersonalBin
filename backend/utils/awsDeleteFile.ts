@@ -25,7 +25,6 @@ const deleteItemFromS3 = async (email: string) => {
     });
 
     const response = await s3Client.send(command);
-    console.log("Deleted successfully:", key);
     return response;
   } catch (error) {
     console.error("Error deleting object:", error);

@@ -5,9 +5,13 @@ const getFile = async (req: Request, res: Response) => {
   try {
     const { email } = req.user as { email: string };
     const fileLink = await awsGetFile(email);
+    
+    // fetch time stamp too and send it to user
     return res.json({
-      link:fileLink
+      link:fileLink.signedUrl,
+      timeStamp:fileLink.timeStamp
     });
+
   } catch (error) {
     return res.status(404).json({ error: "Not found any file linked to user" });
   }

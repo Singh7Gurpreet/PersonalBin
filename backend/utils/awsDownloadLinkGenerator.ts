@@ -16,13 +16,14 @@ const generateDownloadLink = async (email: string) => {
 
     const listResponse = await s3Client.send(listCommand);
     const objects = listResponse.Contents || [];
-
     // Step 2: If no files found, throw error
     if (objects.length === 0) {
       throw new Error("No file for this user");
     }
 
     // Step 3: Use the first matched key
+    let timeStamp = objects[0].LastModified?.getTime();
+
     const objectKey = objects[0].Key!;
     const filename = objectKey.split("$$")[1];
 
@@ -34,7 +35,10 @@ const generateDownloadLink = async (email: string) => {
     });
 
     const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 600 });
-    return signedUrl;
+    return {
+      signedUrl:signedUrl,
+      timeStamp:timeStamp
+    };
   } catch (error: any) {
     if(error.message !== "No file for this user") {
       console.error("Error generating download link:", error);
