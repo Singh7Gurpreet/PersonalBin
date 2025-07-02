@@ -37,7 +37,8 @@ const generateDownloadLink = async (email: string) => {
     const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 600 });
     return {
       signedUrl:signedUrl,
-      timeStamp:timeStamp
+      timeStamp:timeStamp,
+      filename:filename
     };
   } catch (error: any) {
     if(error.message !== "No file for this user") {

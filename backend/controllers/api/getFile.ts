@@ -9,7 +9,8 @@ const getFile = async (req: Request, res: Response) => {
     // fetch time stamp too and send it to user
     return res.json({
       link:fileLink.signedUrl,
-      timeStamp:fileLink.timeStamp
+      timeStamp:fileLink.timeStamp,
+      fileName:fileLink.filename
     });
 
   } catch (error) {
