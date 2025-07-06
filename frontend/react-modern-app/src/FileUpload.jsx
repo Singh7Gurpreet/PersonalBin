@@ -10,7 +10,7 @@ export default function FileUpload() {
     if (!file) return;
 
     try {
-      const res = await axios.post(`${apiUrl.VITE_BACKEND_URL}/api/file`, {
+      const res = await axios.post(`${apiUrl.VITE_BACKEND_URL}/api/storage/file`, {
         fileName: file.name,
         fileType: file.type
       },{withCredentials:true});

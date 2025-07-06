@@ -11,7 +11,7 @@ export default function Dashboard() {
     const fetchFile = async () => {
       try {
         const apiUrl = import.meta.env.VITE_BACKEND_URL;
-        const data = await axios.get(`${apiUrl}/api/file`, {
+        const data = await axios.get(`${apiUrl}/api/storage/file`, {
           withCredentials: true,
         });
         setData(data.data);

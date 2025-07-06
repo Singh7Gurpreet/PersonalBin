@@ -4,7 +4,7 @@ import axios from "axios";
 export default function FileDownload({link}) {
   const apiUrl = import.meta.env;
   const handleDownloadButton = async (event) => {
-    const res = await axios.delete(`${apiUrl.VITE_BACKEND_URL}/api/file`,{withCredentials:true});
+    const res = await axios.delete(`${apiUrl.VITE_BACKEND_URL}/api/storage/file`,{withCredentials:true});
     window.location.href = `${apiUrl.VITE_FRONTEND_URL}/dashboard`;
   };
 
