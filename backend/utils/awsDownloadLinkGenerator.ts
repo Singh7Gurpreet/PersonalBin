@@ -5,8 +5,9 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3Client from "../lib/singletonS3Client.js";
 import readyKey from "./hashFunctions.js";
+import { getEnumType, TYPE_OF_FILE } from "./TypeOfFileEnums.js";
 
-const generateDownloadLink = async (email: string) => {
+const generateDownloadLink = async (email: string, type: TYPE_OF_FILE) => {
   const key = readyKey(email);
   try {
     const listCommand = new ListObjectsV2Command({
@@ -21,16 +22,27 @@ const generateDownloadLink = async (email: string) => {
       throw new Error("No file for this user");
     }
 
-    // Step 3: Use the first matched key
+    let objectKey = null;
+    for(let i = 0; i < objects.length; i++) {
+      const object = objects[i].Key!;
+      const fileType = object.split("$$")[2];
+      if(getEnumType(fileType) === type) {
+        objectKey = objects[i];
+        break;
+      }
+    }
+
+    if(objectKey === null) {
+      throw new Error("No file for this user");
+    }
+
+    const filename = objectKey.Key!.split("$$")[1];
     let timeStamp = objects[0].LastModified?.getTime();
-
-    const objectKey = objects[0].Key!;
-    const filename = objectKey.split("$$")[1];
-
+    
     // Step 4: Generate signed URL
     const command = new GetObjectCommand({
       Bucket: process.env.BUCKET_NAME,
-      Key: objectKey,
+      Key: objectKey.Key,
       ResponseContentDisposition: `attachment; filename="${filename}"`,
     });
 

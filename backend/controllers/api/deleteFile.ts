@@ -1,14 +1,18 @@
 import { Request, Response} from "express";
 import awsDeleteFile from "../../utils/awsDeleteFile.js";
+import { TYPE_OF_FILE } from "../../utils/TypeOfFileEnums.js";
 
-const deleteFileS3 = async (req: Request, res: Response) => {
+const deleteFileCreator = (type:TYPE_OF_FILE) => {
+  return async (req: Request, res: Response) => {
   try{
     const { email }  = req.user as {email:string};
-    await awsDeleteFile(email);
+    await awsDeleteFile(email,type);
     res.status(200).json({message : "OK"});
   } catch (error) {
     res.status(500).json({message : error});
   }
+  };
 }
 
-export default deleteFileS3;
+export const deleteClipboardFile = deleteFileCreator(TYPE_OF_FILE.CLIPBOARD);
+export const deleteStorageFile = deleteFileCreator(TYPE_OF_FILE.STORAGE);
